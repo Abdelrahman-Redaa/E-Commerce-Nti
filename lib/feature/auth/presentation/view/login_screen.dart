@@ -1,19 +1,14 @@
-
-import 'package:e_commercenti/feature/auth/view/register_screen.dart';
+import 'package:e_commercenti/feature/auth/presentation/view/register_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/common/widget/custom_form_text_fiel.dart';
-import '../../../core/utils/validator_functions.dart';
-
+import '../../../../core/common/widget/custom_form_text_fiel.dart';
+import '../../../../core/utils/validator_functions.dart';
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   static const String routeName = "LoginScreen";
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();

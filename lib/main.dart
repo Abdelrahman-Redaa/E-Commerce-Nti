@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'feature/app_section/app_section.dart';
-import 'feature/auth/view/login_screen.dart';
-import 'feature/auth/view/register_screen.dart';
+import 'feature/auth/presentation/view/login_screen.dart';
+import 'feature/auth/presentation/view/register_screen.dart';
 import 'feature/onboarding/onboarding_screen.dart';
 
 void main() async {
