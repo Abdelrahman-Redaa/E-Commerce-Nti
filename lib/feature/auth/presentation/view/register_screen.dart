@@ -5,7 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
-
 import '../../../../core/common/widget/custom_form_text_fiel.dart';
 import '../../../../core/dialogs/app_toasts.dart';
 import '../../../../core/utils/validator_functions.dart';

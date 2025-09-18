@@ -1,18 +1,36 @@
+import 'package:e_commercenti/core/dialogs/app_dialogs.dart';
+import 'package:e_commercenti/core/dialogs/app_toasts.dart';
+import 'package:e_commercenti/feature/auth/data/repo/repository/auth_rebository_imp.dart';
 import 'package:e_commercenti/feature/auth/presentation/view/register_screen.dart';
+import 'package:e_commercenti/feature/auth/presentation/view_model/login/login_cubit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 import '../../../../core/common/widget/custom_form_text_fiel.dart';
 import '../../../../core/utils/validator_functions.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   static const String routeName = "LoginScreen";
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  late GlobalKey<FormState> formKey;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+  late LoginCubit Cubit;
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    formKey = GlobalKey<FormState>();
+    Cubit = LoginCubit(injectableAuthRepo());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,55 +47,91 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 30),
-            Text(
-              "Email",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 5),
-            TextFormFieldHelper(
-              controller: emailController,
-              validator: Validator.validateEmail,
-              hintText: "Enter your email",
-              keyboardType: TextInputType.emailAddress,
-              action: TextInputAction.next,
-            ),
-            SizedBox(height: 30),
-            Text(
-              "Password",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 5),
-            TextFormFieldHelper(
-              controller: passwordController,
-              validator: Validator.validatePassword,
-              hintText: "Enter your password",
-              isPassword: true,
-              keyboardType: TextInputType.emailAddress,
-              action: TextInputAction.next,
-            ),
-            SizedBox(height: 30),
-            MaterialButton(
-              minWidth: double.infinity,
-              height: 50,
-              onPressed: () {
-                if (formKey.currentState!.validate()) {}
-              },
-              color: Color(0xff212121),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child: Text(
-                "Login",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xffFFFFFF),
+        child: Form(
+          key: formKey,
+          child: BlocListener<LoginCubit, LoginState>(
+            bloc: Cubit,
+            listener: (context, state) {
+              if (state is LoginLoading) {
+                AppDialogs.showLoadingDialog(context);
+              }
+              if (state is LoginSuccess) {
+                Navigator.of(context).pop();
+                AppToast.showToast(
+                  context: context,
+                  title: ' Success',
+                  description: " Login Successfully",
+                  type: ToastificationType.success,
+                );
+              }
+              if (state is LoginError) {
+                Navigator.of(context).pop();
+                AppToast.showToast(
+                  context: context,
+                  title: 'Error',
+                  description: "Error from Api",
+                  type: ToastificationType.error,
+                );
+              }
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 30),
+                Text(
+                  "Email",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                 ),
-              ),
+                SizedBox(height: 5),
+                TextFormFieldHelper(
+                  controller: emailController,
+                  validator: Validator.validateEmail,
+                  hintText: "Enter your email",
+                  keyboardType: TextInputType.emailAddress,
+                  action: TextInputAction.next,
+                ),
+                SizedBox(height: 30),
+                Text(
+                  "Password",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 5),
+                TextFormFieldHelper(
+                  controller: passwordController,
+                  validator: Validator.validatePassword,
+                  hintText: "Enter your password",
+                  isPassword: true,
+                  keyboardType: TextInputType.emailAddress,
+                  action: TextInputAction.next,
+                ),
+                SizedBox(height: 30),
+                MaterialButton(
+                  minWidth: double.infinity,
+                  height: 50,
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      await Cubit.login(
+                        emailController.text,
+                        passwordController.text,
+                      );
+                    }
+                  },
+                  color: Color(0xff212121),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xffFFFFFF),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -88,10 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text.rich(
                 TextSpan(
                   text: "Don't have an account? ",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xff6E6A7C),
-                  ),
+                  style: TextStyle(fontSize: 14, color: Color(0xff6E6A7C)),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
                       Navigator.of(context).pushNamed(RegisterScreen.routeName);

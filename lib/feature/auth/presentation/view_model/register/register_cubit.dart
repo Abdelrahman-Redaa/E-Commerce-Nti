@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commercenti/core/network/network.dart';
+import 'package:e_commercenti/feature/auth/data/model/request/register_request_dto.dart';
 import 'package:e_commercenti/feature/auth/data/model/response/register_response_dto.dart';
 import 'package:e_commercenti/feature/auth/data/repo/repository/auth_rebository_contract.dart';
-import 'package:meta/meta.dart';
-
-import '../../../data/api/auth_api.dart';
-import '../../../data/model/request/register_request_dto.dart';
 
 part 'register_state.dart';
 
