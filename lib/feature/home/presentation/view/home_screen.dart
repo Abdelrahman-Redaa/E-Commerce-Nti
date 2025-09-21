@@ -1,6 +1,8 @@
 import 'package:e_commercenti/core/common/widget/product_item_widget.dart';
 import 'package:e_commercenti/feature/home/data/model/response/category_response_dto.dart';
 import 'package:e_commercenti/feature/home/data/model/response/product_response_dto.dart';
+import 'package:e_commercenti/feature/home/domain/entities/category_entity.dart';
+import 'package:e_commercenti/feature/home/domain/entities/product_entity.dart';
 import 'package:e_commercenti/feature/home/presentation/view_model/home_cubit.dart';
 import 'package:e_commercenti/feature/home/presentation/widgets/tab_container_widget.dart';
 import 'package:flutter/material.dart';
@@ -80,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) =>
                         Skeletonizer(
                           child: ProductItemWidget(
-                            product: ProductResponseDto(
+                            product: ProductEntity(
                               images: [imageTest],
                               title: "Dummy Title",
                               price: 123321,
@@ -119,9 +121,9 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-var dummyListOfCategories = <CategoryResponseDto>[
-  CategoryResponseDto(name: "Dummy Name"),
-  CategoryResponseDto(name: "Dummy Name"),
-  CategoryResponseDto(name: "Dummy Name"),
-  CategoryResponseDto(name: "Dummy Name"),
+var dummyListOfCategories = <CategoryEntity>[
+  CategoryEntity(name: "Dummy Name"),
+  CategoryEntity(name: "Dummy Name"),
+  CategoryEntity(name: "Dummy Name"),
+  CategoryEntity(name: "Dummy Name"),
 ];

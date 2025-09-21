@@ -1,39 +1,40 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commercenti/core/network/network.dart';
-import 'package:e_commercenti/feature/home/data/model/response/category_response_dto.dart';
-import 'package:e_commercenti/feature/home/data/model/response/product_response_dto.dart';
-import 'package:e_commercenti/feature/home/data/repo/repository/home_repository_contract.dart';
+import 'package:e_commercenti/feature/home/domain/entities/category_entity.dart';
+import 'package:e_commercenti/feature/home/domain/entities/product_entity.dart';
+import 'package:e_commercenti/feature/home/domain/use_case/get_categories_use_case.dart';
+import 'package:e_commercenti/feature/home/domain/use_case/get_product_use_case.dart';
 import 'package:meta/meta.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit(this._repository) : super(HomeInitial());
-
-  final HomeRepositoryContract _repository;
-  List<CategoryResponseDto> listOfCategories = [];
-  List<ProductResponseDto> listOfProducts = [];
+  HomeCubit(this._getCategoriesUseCase, this._getProductUseCase ) : super(HomeInitial());
+  final GetCategoriesUaeCase _getCategoriesUseCase;
+  final   GetProductUseCase _getProductUseCase;
+  List<CategoryEntity> listOfCategories = [];
+  List<ProductEntity> listOfProducts = [];
   Future<void> getCategories() async {
     emit(GetCategoryLoading());
-    final result = await _repository.getCategories();
+    final result = await _getCategoriesUseCase.call();
     switch (result) {
-      case NetworkSuccess<List<CategoryResponseDto>>():
+      case NetworkSuccess<List<CategoryEntity>>():
         listOfCategories = result.data;
         emit(GetCategorySuccess());
 
-      case NetworkError<List<CategoryResponseDto>>():
+      case NetworkError<List<CategoryEntity >>():
         emit(GetCategoryError());
     }
   }
 
   Future<void> getProducts() async {
     emit(GetProductLoading());
-    final result = await _repository.getProducts();
+    final result = await _getProductUseCase.call();
     switch (result) {
-      case NetworkSuccess<List<ProductResponseDto>>():
+      case NetworkSuccess<List<ProductEntity>>():
         listOfProducts = result.data;
         emit(GetProductSuccess());
-      case NetworkError<List<ProductResponseDto>>():
+      case NetworkError<List<ProductEntity>>():
         emit(GetProductError());
     }
   }

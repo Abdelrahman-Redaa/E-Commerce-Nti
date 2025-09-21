@@ -1,3 +1,5 @@
+import 'package:e_commercenti/feature/home/domain/entities/category_entity.dart';
+
 class CategoryResponseDto {
   int? id;
   String? name;
@@ -6,13 +8,14 @@ class CategoryResponseDto {
   String? creationAt;
   String? updatedAt;
 
-  CategoryResponseDto(
-      {this.id,
-        this.name,
-        this.slug,
-        this.image,
-        this.creationAt,
-        this.updatedAt});
+  CategoryResponseDto({
+    this.id,
+    this.name,
+    this.slug,
+    this.image,
+    this.creationAt,
+    this.updatedAt,
+  });
 
   CategoryResponseDto.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,5 +25,10 @@ class CategoryResponseDto {
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }
-   
+  CategoryEntity toEntity() => CategoryEntity(
+    id: id ?? 0,
+    name: name ?? "",
+    slug: slug ?? "",
+    image: image ?? "",
+  );
 }

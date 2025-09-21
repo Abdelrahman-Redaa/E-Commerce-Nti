@@ -1,9 +1,10 @@
 import 'package:e_commercenti/feature/home/data/model/response/category_response_dto.dart';
+import 'package:e_commercenti/feature/home/domain/entities/category_entity.dart';
 import 'package:flutter/material.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget({super.key, required this.category});
-  final CategoryResponseDto category;
+  final CategoryEntity category;
 
   @override
   Widget build(BuildContext context) {

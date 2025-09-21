@@ -1,4 +1,5 @@
 import 'package:e_commercenti/feature/home/data/model/response/category_response_dto.dart';
+import 'package:e_commercenti/feature/home/domain/entities/product_entity.dart';
 
 class ProductResponseDto {
   int? id;
@@ -36,4 +37,13 @@ class ProductResponseDto {
     creationAt = json['creationAt'];
     updatedAt = json['updatedAt'];
   }
+  ProductEntity toEntity() => ProductEntity(
+    id: id!,
+    title: title!,
+    slug: slug!,
+    price: price!,
+    description: description!,
+    category: category!.toEntity(),
+    images: images!,
+  );
 }

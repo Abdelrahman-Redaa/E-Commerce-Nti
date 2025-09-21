@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:e_commercenti/feature/home/data/model/response/category_response_dto.dart';
+import 'package:e_commercenti/feature/home/domain/entities/category_entity.dart';
 import 'package:e_commercenti/feature/home/presentation/widgets/tab_item_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class TabContainerWidget extends StatefulWidget {
     super.key,
     required this.categories,
   });
-  final List<CategoryResponseDto > categories;
+  final List<CategoryEntity > categories;
 
   @override
   State<TabContainerWidget> createState() => _TabContainerWidgetState();

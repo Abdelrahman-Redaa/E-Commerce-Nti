@@ -1,9 +1,10 @@
+import 'package:e_commercenti/feature/home/domain/entities/product_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commercenti/feature/home/data/model/response/product_response_dto.dart';
 
   const String imageTest = "https://via.placeholder.com/150";
 class ProductItemWidget extends StatelessWidget {
-  final ProductResponseDto product;
+  final ProductEntity product;
 
   const ProductItemWidget({super.key, required this.product});
 

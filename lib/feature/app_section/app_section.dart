@@ -1,3 +1,5 @@
+import 'package:e_commercenti/feature/home/domain/use_case/get_categories_use_case.dart';
+import 'package:e_commercenti/feature/home/domain/use_case/get_product_use_case.dart';
 import 'package:e_commercenti/feature/home/presentation/view/home_screen.dart';
 import 'package:e_commercenti/feature/home/presentation/view_model/home_cubit.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,10 @@ class AppSection extends StatefulWidget {
 class _AppSectionState extends State<AppSection> {
   List<Widget> widgetList = [
     BlocProvider<HomeCubit>(
-      create: (context) =>  HomeCubit(injectHomeRepository())..getCategories()..getProducts(),
+      create: (context) =>
+          HomeCubit(injectGetCategoriesUaeCase(), injectGetProductUseCase())
+            ..getCategories()
+            ..getProducts(),
       child: HomeScreen(),
     ),
     CartScreen(),
