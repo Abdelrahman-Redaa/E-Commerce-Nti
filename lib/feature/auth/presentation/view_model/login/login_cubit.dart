@@ -3,7 +3,7 @@ import 'package:e_commercenti/core/network/network.dart';
 import 'package:e_commercenti/feature/auth/data/model/request/login_request_dto.dart';
 import 'package:e_commercenti/feature/auth/data/model/response/login_response_dto.dart';
 import 'package:e_commercenti/feature/auth/data/repo/repository/auth_rebository_contract.dart';
-import 'package:e_commercenti/feature/auth/data/repo/repository/auth_rebository_imp.dart';
+
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';

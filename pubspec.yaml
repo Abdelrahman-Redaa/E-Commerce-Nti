@@ -16,9 +16,11 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   animate_do: ^4.2.0
   shared_preferences: ^2.5.3
-  skeletonizer: ^1.4.3
+  skeletonizer: ^2.1.0+1
+
   http: ^1.5.0
   flutter_bloc: ^9.1.1
+  flutter_native_splash: ^2.4.6
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +32,9 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+flutter_native_splash:
+  color: "#EBEBEB"
+  image: assets/images/splash_ios_android_11.png
+  android_12:
+    image: assets/images/splash_ios_android_12.png
+    color: "#EBEBEB"

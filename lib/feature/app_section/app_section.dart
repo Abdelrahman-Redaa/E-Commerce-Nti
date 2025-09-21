@@ -1,13 +1,17 @@
+import 'package:e_commercenti/feature/home/presentation/view/home_screen.dart';
+import 'package:e_commercenti/feature/home/presentation/view_model/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../cart/view/cart_screen.dart';
 import '../favorite/view/favorite_screen.dart';
-import '../home/view/home_screen.dart';
+import '../home/data/repo/repository/home_repository_imp.dart';
 import '../profile/view/profile_screen.dart';
 
 class AppSection extends StatefulWidget {
   static const String routeName = 'InitApp';
+
   const AppSection({super.key});
 
   @override
@@ -16,7 +20,10 @@ class AppSection extends StatefulWidget {
 
 class _AppSectionState extends State<AppSection> {
   List<Widget> widgetList = [
-    HomeScreen(),
+    BlocProvider<HomeCubit>(
+      create: (context) =>  HomeCubit(injectHomeRepository())..getCategories()..getProducts(),
+      child: HomeScreen(),
+    ),
     CartScreen(),
     FavoriteScreen(),
     ProfileScreen(),
